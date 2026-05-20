@@ -1,134 +1,322 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora 3D Pro - Flexível</title>
-    <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #eceff1; display: flex; justify-content: center; padding: 20px; }
-        .card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 100%; max-width: 500px; }
-        h2 { color: #2c3e50; text-align: center; margin-bottom: 20px; border-bottom: 2px solid #27ae60; padding-bottom: 10px; }
-        h3 { font-size: 16px; color: #27ae60; margin-top: 20px; margin-bottom: 10px; border-left: 4px solid #27ae60; padding-left: 10px; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .input-group { margin-bottom: 12px; }
-        label { display: block; font-size: 12px; color: #666; margin-bottom: 4px; font-weight: bold; }
-        input { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 14px; background: #fafafa; }
-        button { width: 100%; padding: 15px; background: #27ae60; color: white; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; margin-top: 20px; font-weight: bold; transition: 0.3s; }
-        button:hover { background: #1e8449; }
-        .results { margin-top: 25px; padding: 15px; background: #f9f9f9; border-radius: 8px; border: 1px solid #ddd; display: none; }
-        .result-item { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px; color: #333; }
-        .total { font-size: 18px; font-weight: bold; color: #2c3e50; margin-top: 10px; border-top: 2px solid #eee; padding-top: 10px; }
-        .highlight { color: #27ae60; font-size: 22px; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Calculadora 3D Pro</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial, Helvetica, sans-serif;
+    }
+
+    body{
+      background:#f2f2f2;
+      padding:20px;
+      display:flex;
+      justify-content:center;
+    }
+
+    .container{
+      width:100%;
+      max-width:700px;
+      background:#fff;
+      padding:25px;
+      border-radius:12px;
+      box-shadow:0 2px 10px rgba(0,0,0,.08);
+    }
+
+    h1{
+      text-align:center;
+      margin-bottom:25px;
+      color:#1e3a5f;
+    }
+
+    .section-title{
+      color:#11a84f;
+      font-size:22px;
+      font-weight:bold;
+      margin:25px 0 20px;
+      border-left:5px solid #11a84f;
+      padding-left:10px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:15px;
+    }
+
+    .field{
+      display:flex;
+      flex-direction:column;
+    }
+
+    label{
+      margin-bottom:6px;
+      font-size:14px;
+      color:#444;
+    }
+
+    input{
+      height:45px;
+      padding:10px;
+      border:1px solid #ccc;
+      border-radius:6px;
+      font-size:16px;
+    }
+
+    button{
+      width:100%;
+      height:55px;
+      margin-top:30px;
+      border:none;
+      border-radius:8px;
+      background:#22b455;
+      color:#fff;
+      font-size:20px;
+      font-weight:bold;
+      cursor:pointer;
+      transition:.2s;
+    }
+
+    button:hover{
+      background:#169744;
+    }
+
+    .resultado{
+      margin-top:30px;
+      border:1px solid #ddd;
+      border-radius:10px;
+      padding:20px;
+      background:#fafafa;
+    }
+
+    .linha{
+      display:flex;
+      justify-content:space-between;
+      margin-bottom:12px;
+      font-size:18px;
+    }
+
+    .total{
+      margin-top:25px;
+      font-size:32px;
+      font-weight:bold;
+      color:#11a84f;
+      text-align:right;
+    }
+
+    .venda{
+      margin-top:20px;
+      text-align:center;
+      font-size:22px;
+      font-weight:bold;
+    }
+
+    .venda span{
+      display:block;
+      margin-top:10px;
+      color:#11a84f;
+      font-size:42px;
+    }
+
+    @media(max-width:700px){
+      .grid{
+        grid-template-columns:1fr;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<div class="card">
-    <h2>Calculadora 3D Pro</h2>
-    
-    <h3>1. Configurações de Custo (Fixos)</h3>
-    <div class="grid">
-        <div class="input-group">
-            <label>Preço do Filamento (R$/kg)</label>
-            <input type="number" id="cfgPrecoFilamento" value="78.00">
-        </div>
-        <div class="input-group">
-            <label>Preço da Impressora (R$)</label>
-            <input type="number" id="cfgPrecoImpressora" value="5500.00">
-        </div>
-        <div class="input-group">
-            <label>Taxa Energia (R$/kWh)</label>
-            <input type="number" id="cfgTaxaEnergia" value="0.89">
-        </div>
-        <div class="input-group">
-            <label>Consumo Máquina (Watts)</label>
-            <input type="number" id="cfgConsumoW" value="300">
-        </div>
-        <div class="input-group">
-            <label>Salário Alvo (R$/mês)</label>
-            <input type="number" id="cfgSalario" value="8000.00">
-        </div>
-        <div class="input-group">
-            <label>Custo Adicional (ex: Argola R$)</label>
-            <input type="number" id="cfgAdicional" value="0.22">
-        </div>
+<div class="container">
+
+  <h1>Calculadora 3D Pro</h1>
+
+  <div class="section-title">1. Configurações de Custo (Fixos)</div>
+
+  <div class="grid">
+
+    <div class="field">
+      <label>Preço do Filamento (R$/kg)</label>
+      <input type="number" id="filamento" value="120" step="0.01">
     </div>
 
-    <h3>2. Dados do Projeto Atual</h3>
-    <div class="grid">
-        <div class="input-group">
-            <label>Peso do Lote (gramas)</label>
-            <input type="number" id="pesoTotal" value="79">
-        </div>
-        <div class="input-group">
-            <label>Horas de Impressão</label>
-            <input type="number" id="tempoImpressao" value="5.5">
-        </div>
-        <div class="input-group">
-            <label>Qtd de Peças</label>
-            <input type="number" id="qtdPecas" value="15">
-        </div>
-        <div class="input-group">
-            <label>Seu Trabalho (minutos)</label>
-            <input type="number" id="tempoHumano" value="60">
-        </div>
+    <div class="field">
+      <label>Preço da Impressora (R$)</label>
+      <input type="number" id="impressora" value="5500" step="0.01">
     </div>
 
-    <button onclick="calcular()">CALCULAR CUSTO REAL</button>
-
-    <div class="results" id="output">
-        <div class="result-item"><span>Custo Material:</span> <span id="resFilamento"></span></div>
-        <div class="result-item"><span>Custo Energia:</span> <span id="resEnergia"></span></div>
-        <div class="result-item"><span>Depreciação:</span> <span id="resDeprec"></span></div>
-        <div class="result-item"><span>Sua Mão de Obra:</span> <span id="resMaoObra"></span></div>
-        <div class="result-item"><span>Itens Adicionais:</span> <span id="resAdicional"></span></div>
-        <div class="result-item total"><span>CUSTO UNITÁRIO:</span> <span id="resTotal" class="highlight"></span></div>
-        <div style="text-align: center; margin-top: 15px; font-weight: bold;">
-            Sugestão de Venda (2x Custo): <br>
-            <span id="resSugestao" style="color: #27ae60; font-size: 24px;"></span>
-        </div>
+    <div class="field">
+      <label>Taxa Energia (R$/kWh)</label>
+      <input type="number" id="energia" value="0.89" step="0.01">
     </div>
+
+    <div class="field">
+      <label>Consumo Máquina (Watts)</label>
+      <input type="number" id="consumo" value="300">
+    </div>
+
+    <div class="field">
+      <label>Salário Alvo (R$/mês)</label>
+      <input type="number" id="salario" value="8000" step="0.01">
+    </div>
+
+    <div class="field">
+      <label>Custo Adicional (R$)</label>
+      <input type="number" id="adicional" value="0" step="0.01">
+    </div>
+
+  </div>
+
+  <div class="section-title">2. Dados do Projeto Atual</div>
+
+  <div class="grid">
+
+    <div class="field">
+      <label>Peso do Lote (gramas)</label>
+      <input type="number" id="peso" value="251.36" step="0.01">
+    </div>
+
+    <div class="field">
+      <label>Qtd de Peças</label>
+      <input type="number" id="pecas" value="1">
+    </div>
+
+    <div class="field">
+      <label>Horas de Impressão</label>
+      <input type="number" id="horas" value="16">
+    </div>
+
+    <div class="field">
+      <label>Minutos de Impressão</label>
+      <input type="number" id="minutos" value="0">
+    </div>
+
+    <div class="field">
+      <label>Seu Trabalho (minutos)</label>
+      <input type="number" id="trabalho" value="0">
+    </div>
+
+  </div>
+
+  <button onclick="calcular()">CALCULAR CUSTO REAL</button>
+
+  <div class="resultado">
+
+    <div class="linha">
+      <span>Custo Material:</span>
+      <span id="resMaterial">R$ 0,00</span>
+    </div>
+
+    <div class="linha">
+      <span>Custo Energia:</span>
+      <span id="resEnergia">R$ 0,00</span>
+    </div>
+
+    <div class="linha">
+      <span>Depreciação:</span>
+      <span id="resDepreciacao">R$ 0,00</span>
+    </div>
+
+    <div class="linha">
+      <span>Sua Mão de Obra:</span>
+      <span id="resMao">R$ 0,00</span>
+    </div>
+
+    <div class="linha">
+      <span>Itens Adicionais:</span>
+      <span id="resAdd">R$ 0,00</span>
+    </div>
+
+    <div class="total" id="total">
+      R$ 0,00
+    </div>
+
+    <div class="venda">
+      Sugestão de Venda (2x Custo):
+      <span id="venda">R$ 0,00</span>
+    </div>
+
+  </div>
+
 </div>
 
 <script>
-    function calcular() {
-        // Captura valores das configurações (Fixos/Manuais)
-        const precoKgFilamento = parseFloat(document.getElementById('cfgPrecoFilamento').value);
-        const valorImpressora = parseFloat(document.getElementById('cfgPrecoImpressora').value);
-        const taxaEnergia = parseFloat(document.getElementById('cfgTaxaEnergia').value);
-        const consumoW = parseFloat(document.getElementById('cfgConsumoW').value);
-        const salarioDesejado = parseFloat(document.getElementById('cfgSalario').value);
-        const adicionalUnitario = parseFloat(document.getElementById('cfgAdicional').value);
-        
-        const vidaUtilHoras = 3000; // Média padrão de mercado
-        const horasTrabalhadasMes = 160;
 
-        // Captura valores do projeto
-        const pesoTotalGrams = parseFloat(document.getElementById('pesoTotal').value);
-        const tempoImpressaoHours = parseFloat(document.getElementById('tempoImpressao').value);
-        const qtdPecas = parseInt(document.getElementById('qtdPecas').value);
-        const tempoHumanoMinutos = parseFloat(document.getElementById('tempoHumano').value);
+function moeda(valor){
+  return valor.toLocaleString('pt-BR',{
+    style:'currency',
+    currency:'BRL'
+  });
+}
 
-        // Cálculos
-        const custoFilamentoUn = (precoKgFilamento / 1000 * pesoTotalGrams) / qtdPecas;
-        const custoEnergiaUn = ((consumoW / 1000) * tempoImpressaoHours * taxaEnergia) / qtdPecas;
-        const custoDeprecUn = (valorImpressora / vidaUtilHoras * tempoImpressaoHours) / qtdPecas;
-        const valorHoraTrabalho = salarioDesejado / horasTrabalhadasMes;
-        const custoMaoObraUn = (valorHoraTrabalho * (tempoHumanoMinutos / 60)) / qtdPecas;
+function calcular(){
 
-        const custoTotalFinal = custoFilamentoUn + custoEnergiaUn + custoDeprecUn + custoMaoObraUn + adicionalUnitario;
+  const filamento = parseFloat(document.getElementById('filamento').value) || 0;
+  const impressora = parseFloat(document.getElementById('impressora').value) || 0;
+  const energia = parseFloat(document.getElementById('energia').value) || 0;
+  const consumo = parseFloat(document.getElementById('consumo').value) || 0;
+  const salario = parseFloat(document.getElementById('salario').value) || 0;
+  const adicional = parseFloat(document.getElementById('adicional').value) || 0;
 
-        // Atualiza a tela
-        document.getElementById('resFilamento').innerText = 'R$ ' + custoFilamentoUn.toFixed(2);
-        document.getElementById('resEnergia').innerText = 'R$ ' + custoEnergiaUn.toFixed(2);
-        document.getElementById('resDeprec').innerText = 'R$ ' + custoDeprecUn.toFixed(2);
-        document.getElementById('resMaoObra').innerText = 'R$ ' + custoMaoObraUn.toFixed(2);
-        document.getElementById('resAdicional').innerText = 'R$ ' + adicionalUnitario.toFixed(2);
-        document.getElementById('resTotal').innerText = 'R$ ' + custoTotalFinal.toFixed(2);
-        document.getElementById('resSugestao').innerText = 'R$ ' + (custoTotalFinal * 2).toFixed(2);
-        
-        document.getElementById('output').style.display = 'block';
-    }
+  const peso = parseFloat(document.getElementById('peso').value) || 0;
+  const pecas = parseFloat(document.getElementById('pecas').value) || 1;
+
+  const horas = parseFloat(document.getElementById('horas').value) || 0;
+  const minutos = parseFloat(document.getElementById('minutos').value) || 0;
+
+  const trabalho = parseFloat(document.getElementById('trabalho').value) || 0;
+
+  // CONVERSÃO TOTAL PARA HORAS
+  const tempoTotalHoras = horas + (minutos / 60);
+
+  // MATERIAL
+  const custoMaterial = (peso / 1000) * filamento;
+
+  // ENERGIA
+  const custoEnergia = ((consumo / 1000) * tempoTotalHoras) * energia;
+
+  // DEPRECIAÇÃO
+  const vidaUtilHoras = 3000;
+  const depreciacao = (impressora / vidaUtilHoras) * tempoTotalHoras;
+
+  // MÃO DE OBRA
+  const valorHora = salario / 220;
+  const custoMao = (trabalho / 60) * valorHora;
+
+  // TOTAL
+  const total =
+    custoMaterial +
+    custoEnergia +
+    depreciacao +
+    custoMao +
+    adicional;
+
+  const unitario = total / pecas;
+  const sugestaoVenda = unitario * 2;
+
+  // RESULTADOS
+  document.getElementById('resMaterial').innerText = moeda(custoMaterial);
+  document.getElementById('resEnergia').innerText = moeda(custoEnergia);
+  document.getElementById('resDepreciacao').innerText = moeda(depreciacao);
+  document.getElementById('resMao').innerText = moeda(custoMao);
+  document.getElementById('resAdd').innerText = moeda(adicional);
+
+  document.getElementById('total').innerText =
+    "CUSTO UNITÁRIO: " + moeda(unitario);
+
+  document.getElementById('venda').innerText =
+    moeda(sugestaoVenda);
+}
+
+calcular();
+
 </script>
 
 </body>
