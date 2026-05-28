@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>3D Print Cost Calculator USD</title>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+  background:#f4f4f4;
+  padding:20px;
+  display:flex;
+  justify-content:center;
+}
+
+.container{
+  width:100%;
+  max-width:750px;
+  background:#fff;
+  padding:25px;
+  border-radius:12px;
+  box-shadow:0 2px 10px rgba(0,0,0,.08);
+}
+
+h1{
+  text-align:center;
+  margin-bottom:25px;
+  color:#1e3a5f;
+}
+
+.section-title{
+  color:#0f9d58;
+  font-size:22px;
+  font-weight:bold;
+  margin:25px 0 20px;
+  border-left:5px solid #0f9d58;
+  padding-left:10px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+}
+
+.field{
+  display:flex;
+  flex-direction:column;
+}
+
+label{
+  margin-bottom:6px;
+  font-size:14px;
+  color:#444;
+}
+
+input{
+  height:45px;
+  padding:10px;
+  border:1px solid #ccc;
+  border-radius:6px;
+  font-size:16px;
+}
+
+button{
+  width:100%;
+  height:55px;
+  margin-top:30px;
+  border:none;
+  border-radius:8px;
+  background:#0f9d58;
+  color:#fff;
+  font-size:20px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+button:hover{
+  background:#0b7d45;
+}
+
+.resultado{
+  margin-top:30px;
+  border:1px solid #ddd;
+  border-radius:10px;
+  padding:20px;
+  background:#fafafa;
+}
+
+.linha{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:12px;
+  font-size:18px;
+}
+
+.total{
+  margin-top:25px;
+  font-size:32px;
+  font-weight:bold;
+  color:#0f9d58;
+  text-align:right;
+}
+
+.venda{
+  margin-top:20px;
+  text-align:center;
+  font-size:22px;
+  font-weight:bold;
+}
+
+.venda span{
+  display:block;
+  margin-top:10px;
+  color:#0f9d58;
+  font-size:42px;
+}
+
+@media(max-width:700px){
+  .grid{
+    grid-template-columns:1fr;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>3D Print Cost Calculator</h1>
+
+<div class="section-title">Fixed Costs</div>
+
+<div class="grid">
+
+  <div class="field">
+    <label>Filament Price ($/kg)</label>
+    <input type="number" id="filamento" value="16" step="0.01">
+  </div>
+
+  <div class="field">
+    <label>3D Printer Cost ($)</label>
+    <input type="number" id="impressora" value="399" step="0.01">
+  </div>
+
+  <div class="field">
+    <label>Tax (%)</label>
+    <input type="number" id="taxa" value="6.5" step="0.01">
+  </div>
+
+  <div class="field">
+    <label>TikTok Shipping ($)</label>
+    <input type="number" id="frete" value="7" step="0.01">
+  </div>
+
+  <div class="field">
+    <label>Packaging Cost ($)</label>
+    <input type="number" id="embalagem" value="0.95" step="0.01">
+  </div>
+
+  <div class="field">
+    <label>Magnet Cost Each ($)</label>
+    <input type="number" id="ima" value="0.05" step="0.01">
+  </div>
+
+  <div class="field">
+    <label>Extra Costs ($)</label>
+    <input type="number" id="extra" value="0" step="0.01">
+  </div>
+
+</div>
+
+<div class="section-title">Current Project</div>
+
+<div class="grid">
+
+  <div class="field">
+    <label>Print Weight (grams)</label>
+    <input type="number" id="peso" value="250" step="0.01">
+  </div>
+
+  <div class="field">
+    <label>Quantity</label>
+    <input type="number" id="pecas" value="1">
+  </div>
+
+  <div class="field">
+    <label>Print Hours</label>
+    <input type="number" id="horas" value="10">
+  </div>
+
+  <div class="field">
+    <label>Print Minutes</label>
+    <input type="number" id="minutos" value="0">
+  </div>
+
+  <div class="field">
+    <label>Number of Magnets</label>
+    <input type="number" id="qtdIma" value="1">
+  </div>
+
+</div>
+
+<button onclick="calcular()">CALCULATE REAL COST</button>
+
+<div class="resultado">
+
+  <div class="linha">
+    <span>Material Cost:</span>
+    <span id="resMaterial">$0.00</span>
+  </div>
+
+  <div class="linha">
+    <span>Printer Depreciation:</span>
+    <span id="resDep">$0.00</span>
+  </div>
+
+  <div class="linha">
+    <span>Shipping:</span>
+    <span id="resFrete">$0.00</span>
+  </div>
+
+  <div class="linha">
+    <span>Packaging:</span>
+    <span id="resEmb">$0.00</span>
+  </div>
+
+  <div class="linha">
+    <span>Magnets:</span>
+    <span id="resIma">$0.00</span>
+  </div>
+
+  <div class="linha">
+    <span>Tax:</span>
+    <span id="resTax">$0.00</span>
+  </div>
+
+  <div class="linha">
+    <span>Extra Costs:</span>
+    <span id="resExtra">$0.00</span>
+  </div>
+
+  <div class="total" id="total">
+    UNIT COST: $0.00
+  </div>
+
+  <div class="venda">
+    Suggested Sale Price:
+    <span id="venda">$0.00</span>
+  </div>
+
+</div>
+
+</div>
+
+<script>
+
+function moeda(valor){
+  return valor.toLocaleString('en-US',{
+    style:'currency',
+    currency:'USD'
+  });
+}
+
+function calcular(){
+
+  const filamento = parseFloat(document.getElementById('filamento').value) || 0;
+  const impressora = parseFloat(document.getElementById('impressora').value) || 0;
+  const taxa = parseFloat(document.getElementById('taxa').value) || 0;
+  const frete = parseFloat(document.getElementById('frete').value) || 0;
+  const embalagem = parseFloat(document.getElementById('embalagem').value) || 0;
+  const ima = parseFloat(document.getElementById('ima').value) || 0;
+  const extra = parseFloat(document.getElementById('extra').value) || 0;
+
+  const peso = parseFloat(document.getElementById('peso').value) || 0;
+  const pecas = parseFloat(document.getElementById('pecas').value) || 1;
+  const horas = parseFloat(document.getElementById('horas').value) || 0;
+  const minutos = parseFloat(document.getElementById('minutos').value) || 0;
+  const qtdIma = parseFloat(document.getElementById('qtdIma').value) || 0;
+
+  const tempoTotalHoras = horas + (minutos / 60);
+
+  // MATERIAL
+  const custoMaterial = (peso / 1000) * filamento;
+
+  // DEPRECIATION
+  const vidaUtilHoras = 3000;
+  const depreciacao = (impressora / vidaUtilHoras) * tempoTotalHoras;
+
+  // MAGNETS
+  const custoIma = qtdIma * ima;
+
+  // SUBTOTAL
+  const subtotal =
+    custoMaterial +
+    depreciacao +
+    frete +
+    embalagem +
+    custoIma +
+    extra;
+
+  // TAX
+  const imposto = subtotal * (taxa / 100);
+
+  // TOTAL
+  const total = subtotal + imposto;
+
+  // UNIT COST
+  const unitario = total / pecas;
+
+  // SUGGESTED SELL PRICE
+  const venda = unitario * 2.5;
+
+  document.getElementById('resMaterial').innerText = moeda(custoMaterial);
+  document.getElementById('resDep').innerText = moeda(depreciacao);
+  document.getElementById('resFrete').innerText = moeda(frete);
+  document.getElementById('resEmb').innerText = moeda(embalagem);
+  document.getElementById('resIma').innerText = moeda(custoIma);
+  document.getElementById('resTax').innerText = moeda(imposto);
+  document.getElementById('resExtra').innerText = moeda(extra);
+
+  document.getElementById('total').innerText =
+    "UNIT COST: " + moeda(unitario);
+
+  document.getElementById('venda').innerText =
+    moeda(venda);
+
+}
+
+calcular();
+
+</script>
+
+</body>
+</html>
