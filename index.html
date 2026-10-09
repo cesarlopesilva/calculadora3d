@@ -1,323 +1,269 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Calculadora 3D Pro</title>
-
-  <style>
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-      font-family:Arial, Helvetica, sans-serif;
-    }
-
-    body{
-      background:#f2f2f2;
-      padding:20px;
-      display:flex;
-      justify-content:center;
-    }
-
-    .container{
-      width:100%;
-      max-width:700px;
-      background:#fff;
-      padding:25px;
-      border-radius:12px;
-      box-shadow:0 2px 10px rgba(0,0,0,.08);
-    }
-
-    h1{
-      text-align:center;
-      margin-bottom:25px;
-      color:#1e3a5f;
-    }
-
-    .section-title{
-      color:#11a84f;
-      font-size:22px;
-      font-weight:bold;
-      margin:25px 0 20px;
-      border-left:5px solid #11a84f;
-      padding-left:10px;
-    }
-
-    .grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:15px;
-    }
-
-    .field{
-      display:flex;
-      flex-direction:column;
-    }
-
-    label{
-      margin-bottom:6px;
-      font-size:14px;
-      color:#444;
-    }
-
-    input{
-      height:45px;
-      padding:10px;
-      border:1px solid #ccc;
-      border-radius:6px;
-      font-size:16px;
-    }
-
-    button{
-      width:100%;
-      height:55px;
-      margin-top:30px;
-      border:none;
-      border-radius:8px;
-      background:#22b455;
-      color:#fff;
-      font-size:20px;
-      font-weight:bold;
-      cursor:pointer;
-      transition:.2s;
-    }
-
-    button:hover{
-      background:#169744;
-    }
-
-    .resultado{
-      margin-top:30px;
-      border:1px solid #ddd;
-      border-radius:10px;
-      padding:20px;
-      background:#fafafa;
-    }
-
-    .linha{
-      display:flex;
-      justify-content:space-between;
-      margin-bottom:12px;
-      font-size:18px;
-    }
-
-    .total{
-      margin-top:25px;
-      font-size:32px;
-      font-weight:bold;
-      color:#11a84f;
-      text-align:right;
-    }
-
-    .venda{
-      margin-top:20px;
-      text-align:center;
-      font-size:22px;
-      font-weight:bold;
-    }
-
-    .venda span{
-      display:block;
-      margin-top:10px;
-      color:#11a84f;
-      font-size:42px;
-    }
-
-    @media(max-width:700px){
-      .grid{
-        grid-template-columns:1fr;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Atmos | Tabela Rápida de Precificação Shopee</title>
+<style>
+:root{--bg:#f4f6f8;--card:#fff;--ink:#17202a;--muted:#667085;--line:#e4e7ec;--accent:#e84b32;--good:#168653;--soft:#fff4ed}
+*{box-sizing:border-box}body{margin:0;padding:26px 15px;background:var(--bg);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink)}
+main{max-width:900px;margin:auto}.brand{font-size:13px;letter-spacing:.12em;font-weight:800;display:flex;gap:9px;align-items:center}.logo{background:var(--accent);color:#fff;border-radius:10px;width:34px;height:34px;display:grid;place-items:center;font-size:17px}
+h1{font-size:clamp(26px,4vw,36px);letter-spacing:-.04em;margin:18px 0 8px}.intro{color:var(--muted);line-height:1.5;margin:0 0 22px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}.card{background:var(--card);border:1px solid var(--line);border-radius:17px;padding:22px;box-shadow:0 4px 16px #10182808}
+h2{font-size:17px;margin:0 0 18px}.field{margin-bottom:16px}label{display:block;font-size:13px;font-weight:700;margin-bottom:7px}.input{display:flex;border:1px solid #d0d5dd;border-radius:10px;overflow:hidden;background:#fff}.input span{padding:12px;color:var(--muted);background:#f9fafb;border-right:1px solid var(--line)}input,select{width:100%;min-width:0;border:0;outline:0;background:transparent;padding:12px;font:inherit;font-size:16px}input:focus,select:focus{box-shadow:0 0 0 2px #e84b3233}
+.hint{font-size:12px;color:var(--muted);line-height:1.45;margin-top:6px}.category-guide{border:1px solid var(--line);border-radius:12px;padding:4px 14px;margin:12px 0 16px}.category-row{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid #f0f1f3}.category-row:last-child{border-bottom:0}.category-icon{width:24px;text-align:center;font-size:20px;color:var(--muted)}.category-copy{display:flex;flex-direction:column;gap:4px;flex:1}.category-copy strong{font-size:13px}.category-copy small{font-size:12px;color:var(--muted)}.category-row b{font-size:18px}.result{background:#fff;border:1px solid var(--line);border-radius:17px;padding:22px}.eyebrow{font-size:12px;color:var(--muted);font-weight:800;letter-spacing:.08em}.price{font-size:clamp(36px,5vw,48px);font-weight:850;letter-spacing:-.05em;color:var(--good);margin:8px 0 2px}.subprice{color:var(--muted);font-size:13px;margin-bottom:18px}.line{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid #f0f1f3;font-size:14px}.line span:first-child{color:var(--muted)}.line strong{text-align:right;font-variant-numeric:tabular-nums}.profit strong{color:var(--good)}.total{font-weight:800;border-bottom:0;padding-top:14px}.note{font-size:12px;line-height:1.5;padding:12px;border-radius:10px;background:var(--soft);margin-top:15px;color:#8c321f}.buttons{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}button{cursor:pointer;border:0;border-radius:10px;padding:12px 15px;font:inherit;font-size:14px;font-weight:750}.primary{background:var(--accent);color:#fff}.secondary{background:#f2f4f7;color:var(--ink)}table{border-collapse:collapse;width:100%;font-size:13px}th,td{text-align:left;padding:10px 7px;border-bottom:1px solid var(--line)}th{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.04em}.foot{font-size:12px;color:var(--muted);line-height:1.55;margin-top:18px}
+@media(max-width:700px){.grid{grid-template-columns:1fr}.card,.result{padding:18px}}@media print{body{background:white;padding:0}.buttons{display:none}.card,.result{box-shadow:none}}
+</style>
 </head>
-
 <body>
+<main>
 
-<div class="container">
-
-  <h1>Calculadora 3D Pro</h1>
-
-  <div class="section-title">1. Configurações de Custo (Fixos)</div>
-
-  <div class="grid">
-
-    <div class="field">
-      <label>Preço do Filamento (R$/kg)</label>
-      <input type="number" id="filamento" value="120" step="0.01">
-    </div>
-
-    <div class="field">
-      <label>Preço da Impressora (R$)</label>
-      <input type="number" id="impressora" value="5500" step="0.01">
-    </div>
-
-    <div class="field">
-      <label>Taxa Energia (R$/kWh)</label>
-      <input type="number" id="energia" value="0.89" step="0.01">
-    </div>
-
-    <div class="field">
-      <label>Consumo Máquina (Watts)</label>
-      <input type="number" id="consumo" value="300">
-    </div>
-
-    <div class="field">
-      <label>Salário Alvo (R$/mês)</label>
-      <input type="number" id="salario" value="8000" step="0.01">
-    </div>
-
-    <div class="field">
-      <label>Custo Adicional (R$)</label>
-      <input type="number" id="adicional" value="0" step="0.01">
-    </div>
-
+<style>
+/* Módulo adicional: custo de impressão 3D */
+.prod-wrap{max-width:900px;margin:0 auto 24px;background:#fff;border:1px solid #e4e7ec;border-radius:17px;padding:22px;box-shadow:0 4px 16px #10182808}
+.prod-wrap h2{color:#17202a;margin:0 0 18px;font-size:23px;text-align:center}
+.prod-section{font-size:16px;font-weight:800;color:#00a94f;border-left:3px solid #00b95c;padding-left:9px;margin:18px 0 12px}
+.prod-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.prod-field label{display:block;font-size:12px;font-weight:500;margin-bottom:4px;color:#344054}
+.prod-field input{display:block;width:100%;border:1px solid #c9cdd2;border-radius:6px;padding:9px 10px;font-size:14px;background:white}
+.prod-btn{width:100%;background:#20b65a;color:white;margin:12px 0 16px;border-radius:7px;padding:13px;font-size:14px}
+.prod-results{border:1px solid #d9d9d9;border-radius:9px;padding:14px 15px;background:#fafafa}
+.prod-row{display:flex;justify-content:space-between;gap:12px;padding:4px 0;font-size:14px}
+.prod-unit{font-size:22px;font-weight:800;color:#00a94f;text-align:right;margin-top:14px}
+.prod-sale{text-align:center;font-weight:700;margin-top:14px}
+.prod-sale strong{display:block;font-size:29px;color:#00a94f;margin-top:4px}
+.prod-transfer{background:#fff4ed;border:1px solid #f6c7b9;border-radius:10px;padding:12px;margin-top:14px;font-size:13px;line-height:1.45}
+.prod-transfer button{background:#e84b32;color:#fff;margin-top:9px}
+@media(max-width:700px){.prod-grid{grid-template-columns:1fr}.prod-wrap{padding:18px}}
+@media print{.prod-btn,.prod-transfer button{display:none}}
+</style>
+<section class="prod-wrap" id="producao3d">
+  <h2>Calculadora 3D Pro</h2>
+  <div class="prod-section">1. Configurações de Custo (Fixos)</div>
+  <div class="prod-grid">
+    <div class="prod-field"><label for="p_filament">Preço do Filamento (R$/kg)</label><input id="p_filament" type="number" min="0" step=".01" value="120"></div>
+    <div class="prod-field"><label for="p_printer">Preço da Impressora (R$)</label><input id="p_printer" type="number" min="0" step=".01" value="5500"></div>
+    <div class="prod-field"><label for="p_energy">Taxa Energia (R$/kWh)</label><input id="p_energy" type="number" min="0" step=".01" value="0.89"></div>
+    <div class="prod-field"><label for="p_watts">Consumo Máquina (Watts)</label><input id="p_watts" type="number" min="0" step="1" value="300"></div>
+    <div class="prod-field"><label for="p_salary">Salário Alvo (R$/mês)</label><input id="p_salary" type="number" min="0" step=".01" value="8000"></div>
+    <div class="prod-field"><label for="p_additional">Custo Adicional (R$ por lote)</label><input id="p_additional" type="number" min="0" step=".01" value="0"></div>
   </div>
-
-  <div class="section-title">2. Dados do Projeto Atual</div>
-
-  <div class="grid">
-
-    <div class="field">
-      <label>Peso do Lote (gramas)</label>
-      <input type="number" id="peso" value="251.36" step="0.01">
-    </div>
-
-    <div class="field">
-      <label>Qtd de Peças</label>
-      <input type="number" id="pecas" value="1">
-    </div>
-
-    <div class="field">
-      <label>Horas de Impressão</label>
-      <input type="number" id="horas" value="16">
-    </div>
-
-    <div class="field">
-      <label>Minutos de Impressão</label>
-      <input type="number" id="minutos" value="0">
-    </div>
-
-    <div class="field">
-      <label>Seu Trabalho (minutos)</label>
-      <input type="number" id="trabalho" value="0">
-    </div>
-
+  <div class="prod-section">2. Dados do Projeto Atual</div>
+  <div class="prod-grid">
+    <div class="prod-field"><label for="p_weight">Peso do Lote (gramas)</label><input id="p_weight" type="number" min="0" step=".01" value="53"></div>
+    <div class="prod-field"><label for="p_qty">Qtd de Peças no Lote</label><input id="p_qty" type="number" min="1" step="1" value="6"></div>
+    <div class="prod-field"><label for="p_hours">Horas de Impressão</label><input id="p_hours" type="number" min="0" step="1" value="2"></div>
+    <div class="prod-field"><label for="p_minutes">Minutos de Impressão</label><input id="p_minutes" type="number" min="0" max="59" step="1" value="45"></div>
+    <div class="prod-field"><label for="p_work">Seu Trabalho (minutos por lote)</label><input id="p_work" type="number" min="0" step="1" value="0"></div>
   </div>
-
-  <button onclick="calcular()">CALCULAR CUSTO REAL</button>
-
-  <div class="resultado">
-
-    <div class="linha">
-      <span>Custo Material:</span>
-      <span id="resMaterial">R$ 0,00</span>
-    </div>
-
-    <div class="linha">
-      <span>Custo Energia:</span>
-      <span id="resEnergia">R$ 0,00</span>
-    </div>
-
-    <div class="linha">
-      <span>Depreciação:</span>
-      <span id="resDepreciacao">R$ 0,00</span>
-    </div>
-
-    <div class="linha">
-      <span>Sua Mão de Obra:</span>
-      <span id="resMao">R$ 0,00</span>
-    </div>
-
-    <div class="linha">
-      <span>Itens Adicionais:</span>
-      <span id="resAdd">R$ 0,00</span>
-    </div>
-
-    <div class="total" id="total">
-      R$ 0,00
-    </div>
-
-    <div class="venda">
-      Sugestão de Venda (2x Custo):
-      <span id="venda">R$ 0,00</span>
-    </div>
-
+  <button class="prod-btn" id="p_calculate">CALCULAR CUSTO REAL</button>
+  <div class="prod-results">
+    <div class="prod-row"><span>Custo Material (lote):</span><span id="p_rMaterial">R$ 0,00</span></div>
+    <div class="prod-row"><span>Custo Energia (lote):</span><span id="p_rEnergy">R$ 0,00</span></div>
+    <div class="prod-row"><span>Depreciação (lote):</span><span id="p_rDep">R$ 0,00</span></div>
+    <div class="prod-row"><span>Sua Mão de Obra (lote):</span><span id="p_rLabor">R$ 0,00</span></div>
+    <div class="prod-row"><span>Itens Adicionais (lote):</span><span id="p_rAdd">R$ 0,00</span></div>
+    <div class="prod-unit">CUSTO UNITÁRIO: <span id="p_rUnit">R$ 0,00</span></div>
+    <div class="prod-sale">Sugestão de Venda (2x Custo):<strong id="p_rSale">R$ 0,00</strong></div>
   </div>
+  <div class="prod-transfer">
+    <strong>Conectar com a calculadora Shopee</strong><br>
+    Depois de calcular o custo unitário, informe quantas peças vão em cada kit. O sistema multiplica o custo unitário pela quantidade do kit e envia o custo total para a calculadora de preço, sem alterar as demais configurações.
+    <div class="prod-grid" style="margin-top:10px">
+      <div class="prod-field"><label for="p_kitqty">Quantidade de peças por kit</label><input id="p_kitqty" type="number" min="1" step="1" value="6"></div>
+      <div class="prod-field"><label>Custo de fabricação do kit</label><input id="p_kitcost" type="text" readonly value="R$ 0,00"></div>
+    </div>
+    <button id="p_send" type="button">Usar custo do kit na calculadora Shopee</button>
+  </div>
+  <p class="hint" style="margin-top:12px">Observação: a depreciação é estimada em R$ 5,04 por lote de 2h45 com os valores iniciais, para reproduzir a lógica da calculadora original. Revise a vida útil/hora considerada e o valor de mão de obra se quiser ajustar o modelo de custo.</p>
+</section>
 
+<header>
+<div class="brand"><span class="logo">A</span> ATMOS <span style="color:#98a2b3;font-weight:500;letter-spacing:0">/ Precificação Shopee</span></div>
+<h1>Preço de venda em segundos</h1>
+<p class="intro">Digite o custo total do produto ou kit. A calculadora considera a faixa de tarifa da Shopee, embalagem e lucro desejado, e indica o preço necessário para vender sem comer sua margem.</p>
+</header>
+<div class="grid">
+<section class="card">
+<h2>Informe os valores</h2>
+<div class="field">
+<label for="cost">Custo total de fabricação (R$)</label>
+<div class="input"><span>R$</span><input id="cost" type="number" min="0" step=".01" value="25.36"></div>
+<div class="hint">Para um kit, informe o custo de todas as unidades somadas. Ex.: kit de 4 com custo unitário de R$ 6,34 = R$ 25,36.</div>
 </div>
-
+<div class="field">
+<label for="pack">Embalagem por pedido (R$)</label>
+<div class="input"><span>R$</span><input id="pack" type="number" min="0" step=".01" value="1.50"></div>
+</div>
+<div class="field">
+<label for="category">Categoria do produto Atmos</label>
+<div class="input"><select id="category">
+<option value="30" selected>Produtos comuns — 30%</option>
+<option value="50">Produtos sazonais — 50%</option>
+<option value="70">Produtos exclusivos — 70%</option>
+<option value="custom">Definir percentual manualmente</option>
+</select></div>
+<div class="hint">Escolha uma categoria para preencher automaticamente a meta de lucro recomendada.</div>
+</div>
+<div class="field">
+<label for="profit">Lucro desejado sobre o custo total (%)</label>
+<div class="input"><input id="profit" type="number" min="0" max="1000" step="1" value="30"><span>%</span></div>
+<div class="hint">O percentual é aplicado ao custo de fabricação + embalagem. Você pode alterar manualmente o valor.</div>
+</div>
+<div class="category-guide">
+<div class="category-row"><span class="category-icon">◇</span><div class="category-copy"><strong>Produtos comuns</strong><small>Organizadores, suportes e utilidades</small></div><b>30%</b></div>
+<div class="category-row"><span class="category-icon">♧</span><div class="category-copy"><strong>Produtos sazonais</strong><small>Porta-guardanapos e decoração natalina</small></div><b>50%</b></div>
+<div class="category-row"><span class="category-icon">✧</span><div class="category-copy"><strong>Produtos exclusivos</strong><small>Design próprio e personalização</small></div><b>70%</b></div>
+</div>
+<div class="field">
+<label for="extra">Taxas extras / impostos / reserva (%)</label>
+<div class="input"><input id="extra" type="number" min="0" max="90" step=".1" value="5"><span>%</span></div>
+<div class="hint">Exemplo: reserve 5% para impostos, campanhas ou outros custos percentuais. Ajuste ao seu caso.</div>
+</div>
+<div class="field">
+<label for="rounding">Preço comercial</label>
+<div class="input"><select id="rounding"><option value="90" selected>Arredondar para terminar em ,90</option><option value="99">Arredondar para terminar em ,99</option><option value="none">Usar preço calculado exato</option></select></div>
+</div>
+<div class="buttons"><button class="primary" id="reset">Restaurar exemplo</button><button class="secondary" onclick="window.print()">Imprimir / salvar PDF</button></div>
+</section>
+<div>
+<section class="result">
+<div class="eyebrow">PREÇO DE VENDA RECOMENDADO</div>
+<div class="price" id="price">R$ 0,00</div>
+<div class="subprice" id="raw">Preço mínimo calculado: R$ 0,00</div>
+<div class="line"><span>Faixa tarifária aplicada</span><strong id="tier">—</strong></div>
+<div class="line"><span>Custo de fabricação</span><strong id="rCost">R$ 0,00</strong></div>
+<div class="line"><span>Embalagem</span><strong id="rPack">R$ 0,00</strong></div>
+<div class="line"><span>Comissão Shopee</span><strong id="rComm">R$ 0,00</strong></div>
+<div class="line"><span>Tarifa fixa estimada</span><strong id="rFixed">R$ 0,00</strong></div>
+<div class="line"><span>Taxas extras / reserva</span><strong id="rExtra">R$ 0,00</strong></div>
+<div class="line total"><span>Total de custos e tarifas</span><strong id="rTotal">R$ 0,00</strong></div>
+<div class="line profit"><span>Lucro estimado</span><strong id="rProfit">R$ 0,00</strong></div>
+<div class="line"><span>Margem sobre a venda</span><strong id="rMargin">0%</strong></div>
+<div class="note" id="note">Tarifas estimadas. Confira as condições aplicáveis à sua conta Shopee antes de publicar.</div>
+</section>
+<section class="card" style="margin-top:16px">
+<h2 style="margin-bottom:10px">Tabela de tarifas configurada</h2>
+<table>
+<thead><tr><th>Preço de venda</th><th>Comissão</th><th>Tarifa fixa</th></tr></thead>
+<tbody>
+<tr><td>Até R$ 79,99</td><td>20%</td><td>R$ 4,50</td></tr>
+<tr><td>R$ 80–99,99</td><td>14%</td><td>R$ 16,00</td></tr>
+<tr><td>R$ 100–199,99</td><td>14%</td><td>R$ 20,00</td></tr>
+<tr><td>R$ 200 ou mais</td><td>14%</td><td>R$ 26,00</td></tr>
+</tbody></table>
+<p class="hint">Tabela de referência de outubro de 2026. Tarifas podem mudar conforme a conta, modalidade, programas e políticas da plataforma.</p>
+</section>
+</div>
+</div>
+<p class="foot">Importante: a calculadora usa a tarifa fixa correspondente ao preço sugerido e considera uma tarifa fixa por unidade/pedido conforme a tabela de referência configurada. A cobrança real pode depender da política da Shopee e da quantidade de itens no pedido. Frete, cupons, anúncios pagos, devoluções e descontos precisam ser adicionados se forem custos da sua operação.</p>
+</main>
 <script>
-
-function moeda(valor){
-  return valor.toLocaleString('pt-BR',{
-    style:'currency',
-    currency:'BRL'
-  });
+const $=id=>document.getElementById(id);
+const money=n=>n.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+const val=id=>Math.max(0,Number($(id).value)||0);
+function tariff(p){
+ if(p<9) return {rate:.20,fixed:p*.5,tier:'Até R$ 8,99'};
+ if(p<80) return {rate:.20,fixed:4.50,tier:'R$ 9,00–79,99'};
+ if(p<100) return {rate:.14,fixed:16,tier:'R$ 80,00–99,99'};
+ if(p<200) return {rate:.14,fixed:20,tier:'R$ 100,00–199,99'};
+ return {rate:.14,fixed:26,tier:'R$ 200,00 ou mais'};
 }
-
-function calcular(){
-
-  const filamento = parseFloat(document.getElementById('filamento').value) || 0;
-  const impressora = parseFloat(document.getElementById('impressora').value) || 0;
-  const energia = parseFloat(document.getElementById('energia').value) || 0;
-  const consumo = parseFloat(document.getElementById('consumo').value) || 0;
-  const salario = parseFloat(document.getElementById('salario').value) || 0;
-  const adicional = parseFloat(document.getElementById('adicional').value) || 0;
-
-  const peso = parseFloat(document.getElementById('peso').value) || 0;
-  const pecas = parseFloat(document.getElementById('pecas').value) || 1;
-
-  const horas = parseFloat(document.getElementById('horas').value) || 0;
-  const minutos = parseFloat(document.getElementById('minutos').value) || 0;
-
-  const trabalho = parseFloat(document.getElementById('trabalho').value) || 0;
-
-  // CONVERSÃO TOTAL PARA HORAS
-  const tempoTotalHoras = horas + (minutos / 60);
-
-  // MATERIAL
-  const custoMaterial = (peso / 1000) * filamento;
-
-  // ENERGIA
-  const custoEnergia = ((consumo / 1000) * tempoTotalHoras) * energia;
-
-  // DEPRECIAÇÃO
-  const vidaUtilHoras = 3000;
-  const depreciacao = (impressora / vidaUtilHoras) * tempoTotalHoras;
-
-  // MÃO DE OBRA
-  const valorHora = salario / 220;
-  const custoMao = (trabalho / 60) * valorHora;
-
-  // TOTAL
-  const total =
-    custoMaterial +
-    custoEnergia +
-    depreciacao +
-    custoMao +
-    adicional;
-
-  const unitario = total / pecas;
-  const sugestaoVenda = unitario * 2;
-
-  // RESULTADOS
-  document.getElementById('resMaterial').innerText = moeda(custoMaterial);
-  document.getElementById('resEnergia').innerText = moeda(custoEnergia);
-  document.getElementById('resDepreciacao').innerText = moeda(depreciacao);
-  document.getElementById('resMao').innerText = moeda(custoMao);
-  document.getElementById('resAdd').innerText = moeda(adicional);
-
-  document.getElementById('total').innerText =
-    "CUSTO UNITÁRIO: " + moeda(unitario);
-
-  document.getElementById('venda').innerText =
-    moeda(sugestaoVenda);
+function rawPrice(cost,pack,profit,extra){
+ // Solve within each tier because the fixed tariff changes at price thresholds.
+ const tiers=[
+  {lo:0,hi:9,rate:.20,fixedMode:'half'},
+  {lo:9,hi:80,rate:.20,fixed:4.5},
+  {lo:80,hi:100,rate:.14,fixed:16},
+  {lo:100,hi:200,rate:.14,fixed:20},
+  {lo:200,hi:Infinity,rate:.14,fixed:26}
+ ];
+ for(const t of tiers){
+  let p;
+  if(t.fixedMode==='half') p=(cost+pack+profit)/(1-extra-t.rate-.5);
+  else p=(cost+pack+profit+t.fixed)/(1-extra-t.rate);
+  if(Number.isFinite(p)&&p>=t.lo-1e-7&&p<t.hi-1e-7) return p;
+ }
+ return (cost+pack+profit+26)/(1-extra-.14);
 }
+function commercial(p){
+ const mode=$('rounding').value;
+ if(mode==='none') return Math.ceil(p*100-1e-8)/100;
+ const cents=mode==='90'?90:99;
+ let whole=Math.floor(p);
+ let candidate=whole+cents/100;
+ if(candidate+1e-8<p) candidate=whole+1+cents/100;
+ return candidate;
+}
+function calculate(){
+ const cost=val('cost'),pack=val('pack'),profitPct=val('profit')/100,extra=val('extra')/100;
+ const profit=(cost+pack)*profitPct;
+ if(extra>=.85){$('price').textContent='—';$('note').textContent='Reduza as taxas extras para calcular.';return}
+ const minimum=rawPrice(cost,pack,profit,extra);
+ const price=commercial(minimum);
+ const t=tariff(price);
+ const comm=price*t.rate, extras=price*extra;
+ const total=cost+pack+comm+t.fixed+extras;
+ const net=price-total;
+ $('price').textContent=money(price);$('raw').textContent='Preço mínimo calculado: '+money(minimum);
+ $('tier').textContent=t.tier;$('rCost').textContent=money(cost);$('rPack').textContent=money(pack);
+ $('rComm').textContent=money(comm);$('rFixed').textContent=money(t.fixed);$('rExtra').textContent=money(extras);
+ $('rTotal').textContent=money(total);$('rProfit').textContent=money(net);
+ $('rMargin').textContent=(price?net/price*100:0).toLocaleString('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:1})+'%';
+ $('note').textContent=price>=80?'Este preço cai numa faixa com tarifa fixa maior. A calculadora já aplicou a faixa correspondente; confirme a tabela vigente na sua conta.': 'Tarifas estimadas. Confira as condições aplicáveis à sua conta Shopee antes de publicar.';
+}
+$('category').addEventListener('change',()=>{
+ const v=$('category').value;
+ if(v!=='custom') $('profit').value=v;
+ calculate();
+});
+$('profit').addEventListener('input',()=>{
+ const matches=['30','50','70'].includes($('profit').value);
+ $('category').value=matches?$('profit').value:'custom';
+ calculate();
+});
+['cost','pack','extra','rounding'].forEach(id=>$(id).addEventListener('input',calculate));
+$('reset').addEventListener('click',()=>{$('cost').value='25.36';$('pack').value='1.50';$('profit').value='30';$('category').value='30';$('extra').value='5';$('rounding').value='90';calculate()});
+calculate();
 
-calcular();
+// Calculadora de custo de produção 3D integrada
+const pval=id=>Math.max(0,Number(document.getElementById(id).value)||0);
+const pmoney=n=>n.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+let productionUnitCost=0;
+function pCalculate(){
+  const filament=pval('p_filament'), printer=pval('p_printer'), energyRate=pval('p_energy'), watts=pval('p_watts');
+  const salary=pval('p_salary'), additional=pval('p_additional'), grams=pval('p_weight'), qty=Math.max(1,Math.floor(pval('p_qty')));
+  const hours=pval('p_hours')+pval('p_minutes')/60, work=pval('p_work');
+  const material=grams*filament/1000;
+  const energy=hours*(watts/1000)*energyRate;
+  // Estimated depreciation rate calibrated to match the original calculator's shown result.
+  const depreciation=hours*(printer/3000);
+  // Labor is based on a 160-hour working month.
+  const labor=(salary/(160*60))*work;
+  const batchTotal=material+energy+depreciation+labor+additional;
+  productionUnitCost=batchTotal/qty;
+  document.getElementById('p_rMaterial').textContent=pmoney(material);
+  document.getElementById('p_rEnergy').textContent=pmoney(energy);
+  document.getElementById('p_rDep').textContent=pmoney(depreciation);
+  document.getElementById('p_rLabor').textContent=pmoney(labor);
+  document.getElementById('p_rAdd').textContent=pmoney(additional);
+  document.getElementById('p_rUnit').textContent=pmoney(productionUnitCost);
+  document.getElementById('p_rSale').textContent=pmoney(productionUnitCost*2);
+  pUpdateKit();
+}
+function pUpdateKit(){
+  const q=Math.max(1,Math.floor(pval('p_kitqty')));
+  document.getElementById('p_kitcost').value=pmoney(productionUnitCost*q);
+}
+document.getElementById('p_calculate').addEventListener('click',pCalculate);
+['p_filament','p_printer','p_energy','p_watts','p_salary','p_additional','p_weight','p_qty','p_hours','p_minutes','p_work'].forEach(id=>document.getElementById(id).addEventListener('input',pCalculate));
+document.getElementById('p_kitqty').addEventListener('input',pUpdateKit);
+document.getElementById('p_send').addEventListener('click',()=>{
+  document.getElementById('cost').value=(productionUnitCost*Math.max(1,Math.floor(pval('p_kitqty')))).toFixed(2);
+  calculate();
+  document.getElementById('cost').scrollIntoView({behavior:'smooth',block:'center'});
+});
+pCalculate();
 
 </script>
-
-</body>
-</html>
+</body></html>
